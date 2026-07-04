@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install only production dependencies to keep the image lightweight
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Copy the rest of your application source code
 COPY . .
