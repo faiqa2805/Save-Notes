@@ -1,0 +1,127 @@
+<%- include('partials/header.ejs'); -%>
+
+  <div class="container1">
+    <div class="main-title">
+      Save Notes
+    </div>
+
+    <div class="search-actions-bar">
+      <form action="/search" method="GET" class="search-form">
+        <input type="text" name="query" placeholder="Search docs...." required>
+
+        <button type="submit" class="search-btn">
+          <img src="/images/search-icon.png" alt="Search" class="btn-icon">
+        </button>
+      </form>
+
+      <!--adding a new pdf-->
+      <a href="/new" class="add-btn">
+      <img src="/images/plus-icon.png" alt="Add New" class="btn-icon">
+      </a>
+    </div>
+
+    <!--add sections-->
+    <div class="sections-card">
+
+      <% if(locals.sections && sections.length > 0) { %>
+        <% for(let section of sections) { %>
+          <div class="item">
+            
+            <!-- 1. DELETE FORM -->
+            <form action="/delete-section" method="POST" class="delete-form">
+              <input type="hidden" name="deleteSectionId" value="<%= section.id %>">
+              <button type="submit" class="action-btn bin-btn">
+                <img class="icon" src="/images/delete-icon.png" alt="Delete">
+              </button>
+            </form>
+
+            <!-- 2. CLICKABLE TEXT TITLE -->
+            <a href="/sections/<%= section.id %>" class="section-link">
+              <p id="title<%= section.id %>" class="section-text-title <%= locals.currentSectionId == section.id ? 'active-section' : '' %>">
+                <%= section.name %>
+              </p>
+            </a>
+
+            <!-- 3. INLINE EDIT FORM -->
+            <form class="edit-form" action="/edit-section" method="POST">
+              <input type="hidden" name="updatedSectionId" value="<%= section.id %>">
+              <!-- SWAPPED 'hidden' FOR OUR NEW CLASS -->
+              <input id="input<%= section.id %>" type="text" name="updatedSectionName" value="<%= section.name %>" autocomplete="off" class="hidden-element" required   />
+              <!-- SWAPPED 'hidden' FOR OUR NEW CLASS -->
+              <button id="done<%= section.id %>" class="action-btn check-btn hidden-element" type="submit">
+                <img class="icon" src="/images/check-icon.png" alt="Save">
+              </button>
+            </form>
+
+            <!-- 4. EDIT TRIGGER BUTTON -->
+            <button id="edit<%= section.id %>" class="action-btn edit-btn" onclick="handler('<%= section.id %>')">
+              <img class="icon" src="/images/pencil-icon.png" alt="Edit">
+            </button>
+
+          </div>
+        <% } %>
+      <% } else { %>
+        <div class="item empty-state-text">No categories created yet.</div>
+      <% } %>
+      
+      <!-- Bottom Quick-Add Section Form Row -->
+      <form class="item inline-add-row" action="/add-section" method="POST">
+        <input type="text" name="sectionName" placeholder="New Item" autocomplete="off" required />
+        <button class="inline-add-circle-btn" type="submit">+</button>
+      </form>
+    </div>
+
+<!-- PDF Display Area -->
+<% if (locals.currentSectionId) { %>
+  <div class="pdf-container-card">
+    <div class="pdf-card-header">
+      <h2>Files in "<%= currentSectionName %>"</h2>
+    </div>
+
+    <!-- CLEAN HORIZONTAL LIST CONTAINER -->
+    <div class="pdf-horizontal-list">
+      <% if (locals.books && books.length > 0) { %>
+        <% for (let book of books) { %>
+          <a href="<%= book.pdf_url %>" target="_blank" class="pdf-card-wrapper-link">
+            <div class="pdf-horizontal-card">
+              
+              <!-- Left Side: Folder Icon -->
+              <div class="pdf-icon-area">
+                <span class="pdf-folder-icon">📁</span>
+              </div>
+
+              <!-- Right Side: Text Title -->
+              <div class="pdf-text-area">
+                <span class="pdf-card-title" title="<%= book.title %>">
+                  <%= book.title %>
+                </span>
+              </div>
+
+            </div>
+          </a>
+        <% } %>
+      <% } else { %>
+        <div class="empty-state-text">No PDFs added to this section yet.</div>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<!-- CLIENT-SIDE SCRIPT: Toggles hidden input fields for inline editing -->
+<script>
+  function handler(id) {
+    // Hide static text title and the edit pencil icon
+    document.getElementById("title" + id).classList.add("hidden-element");
+    document.getElementById("edit" + id).classList.add("hidden-element");
+    
+    // Reveal the input text field and the checkmark save button
+    document.getElementById("input" + id).classList.remove("hidden-element");
+    document.getElementById("done" + id).classList.remove("hidden-element");
+    
+    // Auto-focus directly into the input field for instant typing
+    document.getElementById("input" + id).focus();
+  }
+</script>
+
+  </div>
+<%- include('partials/footer.ejs'); -%>

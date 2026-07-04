@@ -1,0 +1,52 @@
+<%- include('partials/header.ejs'); -%>
+
+<div class="app-body">
+  <div class="main-container">
+    
+    <!-- Glassmorphic Form Card Container -->
+    <div class="form-container-card">
+      <div class="form-header">
+        <h2>Add Document to Workspace</h2>
+        <p>Link a new PDF resource to your study dashboard</p>
+      </div>
+
+      <form action="/add" method="POST" class="document-form">
+        
+        <!-- Field 1: Document Title -->
+        <div class="form-group">
+          <label for="pdf_title">Document Title</label>
+          <input type="text" id="pdf_title" name="title" placeholder="e.g., OS: Three Easy Pieces" required>
+        </div>
+
+        <!-- Field 2: Google Drive URL -->
+        <div class="form-group">
+          <label for="pdf_url">Google Drive Link</label>
+          <input type="url" id="pdf_url" name="pdf_url" placeholder="https://drive.google.com/file/d/..." required>
+        </div>
+
+        <!-- Field 3: Dynamic Section Dropdown Selector -->
+        <div class="form-group">
+          <label for="section_id">Assign to Section</label>
+          <select id="section_id" name="section_id" required>
+            <option value="" disabled selected>Select a category...</option>
+            <% if (locals.sections && sections.length > 0) { %>
+              <% for (let section of sections) { %>
+                <option value="<%= section.id %>"><%= section.name %></option>
+              <% } %>
+            <% } %>
+          </select>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <a href="/" class="btn-cancel">Cancel</a>
+          <button type="submit" class="btn-submit">Save Document</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<%- include('partials/footer.ejs'); -%>
