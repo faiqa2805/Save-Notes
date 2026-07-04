@@ -1,16 +1,30 @@
 # SaveNotes
 
-A production-ready, containerized full-stack web application designed for high-performance, streamlined organization of PDF documents and academic notes. Built with a focus on optimal database integrity, minimal client-side overhead, and clean architectural patterns.
+Inspired by my sister's need for a structured, section-based repository for her books and academic documents, I built SaveNotes as a personal challenge in end-to-end systems engineering. Instead of relying on existing mass-market tools, I used this MVP capstone project to practice rigorous architectural planning and low-overhead design. It turned into an incredible deep dive into the joy of systems-level thinking—resulting in a fully containerized, high-performance web application engineered for optimal database integrity and dynamic data delivery.
 
 ---
 
-## 🚀 Architecture & Core Features
+## 🏗️ System Architecture & Design Trade-offs
 
-* **Dynamic Document Categorization**: Optimized relational database schema utilizing foreign key constraints to seamlessly map documents to user-managed sections.
-* **On-Demand Data Fetching**: Implements an efficient lazy-loading architecture where section payloads are retrieved asynchronously upon user interaction, drastically reducing initial page load times and bandwidth consumption.
-* **Full CRUD Operations**: End-to-end implementation of Create, Read, Update, and Delete actions for section management, complete with dynamic frontend UI synchronization.
-* **High Schema Integrity**: Built on atomic database transaction principles where invalid or undefined inputs are strictly rejected at the database layer to maintain data purity.
-* **Modern UI Engine**: Server-side rendered views built with highly optimized, modular CSS layout structures ensuring a responsive, card-based interface.
+### 1. Enforced Data Integrity (Database Layer)
+
+* **Implementation**: Relational schema constraints utilizing strict data typing, unique bounds, and foreign key references (`section_id INT REFERENCES sections(id)`).
+* **Engineering Impact**: Rejects corrupted, partial, or undefined writes directly at the database engine level, ensuring absolute atomic consistency and system data reliability.
+
+### 2. Infrastructure Isolation (DevOps Layer)
+
+* **Implementation**: Fully containerized runtime using a case-sensitive `Dockerfile` built on a lightweight `node:18-alpine` footprint.
+* **Engineering Impact**: Guarantees immutable, environment-agnostic deployments while utilizing optimized multi-layer Docker caching to minimize deployment build pipeline times.
+
+### 3. Latency & Resource Optimization (Network Layer)
+
+* **Implementation**: Migrated from monolithic page loads to a dynamic, client-triggered asynchronous lazy-loading data flow.
+* **Engineering Impact**: Significantly reduces initial server memory footprint, minimizes client bandwidth consumption, and prevents DOM bottlenecks to improve Time to Interactive (TTI).
+
+### 4. Stateless Application Configuration (Security Layer)
+
+* **Implementation**: Total decoupling of production credentials and network connection strings from the core codebase via runtime environment injection (`dotenv`).
+* **Engineering Impact**: Follows industry-standard Twelve-Factor App principles, completely eliminating configuration drift and allowing horizontal scaling without security leaks.
 
 ---
 
@@ -19,7 +33,7 @@ A production-ready, containerized full-stack web application designed for high-p
 * **Frontend**: EJS (Embedded JavaScript Templates), Semantic HTML5, Vanilla JavaScript, Optimized Custom CSS
 * **Backend**: Node.js, Express.js (RESTful API architecture & custom middleware plumbing)
 * **Database**: PostgreSQL (Relational schema modeling with robust indexing)
-* **DevOps & Deployment**: Docker (Multi-layer image building), Render Container Network, Neon Serverless Postgres (SSL-enforced production database pipeline)
+* **DevOps & Deployment**: Docker , Render Container Network, Neon Serverless Postgres 
 
 ---
 
