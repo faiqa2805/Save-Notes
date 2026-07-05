@@ -4,35 +4,21 @@ Inspired by my sister's need for a structured, section-based repository for her 
 
 ---
 
-## 🏗️ System Architecture & Design Trade-offs
 
-### 1. Enforced Data Integrity (Database Layer)
+## 🏗️ System Architecture & Design
 
-* **Implementation**: Relational schema constraints utilizing strict data typing, unique bounds, and foreign key references (`section_id INT REFERENCES sections(id)`).
-* **Engineering Impact**: Rejects corrupted, partial, or undefined writes directly at the database engine level, ensuring absolute atomic consistency and system data reliability.
-
-### 2. Infrastructure Isolation (DevOps Layer)
-
-* **Implementation**: Fully containerized runtime using a case-sensitive `Dockerfile` built on a lightweight `node:18-alpine` footprint.
-* **Engineering Impact**: Guarantees immutable, environment-agnostic deployments while utilizing optimized multi-layer Docker caching to minimize deployment build pipeline times.
-
-### 3. Latency & Resource Optimization (Network Layer)
-
-* **Implementation**: Migrated from monolithic page loads to a dynamic, client-triggered asynchronous lazy-loading data flow.
-* **Engineering Impact**: Significantly reduces initial server memory footprint, minimizes client bandwidth consumption, and prevents DOM bottlenecks to improve Time to Interactive (TTI).
-
-### 4. Stateless Application Configuration (Security Layer)
-
-* **Implementation**: Total decoupling of production credentials and network connection strings from the core codebase via runtime environment injection (`dotenv`).
-* **Engineering Impact**: Follows industry-standard Twelve-Factor App principles, completely eliminating configuration drift and allowing horizontal scaling without security leaks.
+* **Strict Database Integrity:** Enforced atomic consistency natively in PostgreSQL using strict schemas and foreign key constraints (`section_id INT REFERENCES sections(id)`), entirely preventing invalid or partial application-layer writes.
+* **Optimized Containerization:** Deployed via a lightweight `node:18-alpine` Docker image. Structured the `Dockerfile` to leverage multi-layer caching, ensuring fast, reproducible cloud builds on Render.
+* **Asynchronous Data Fetching:** Migrated from monolithic page loads to an on-demand, lazy-loading architecture. Fetching section payloads only upon user interaction significantly reduces initial server load and client bandwidth.
+* **Stateless Configuration:** Adhered strictly to Twelve-Factor App security principles by isolating database URIs and credentials from the source code, utilizing `dotenv` and cloud-native environment variables for secure deployments.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend**: EJS (Embedded JavaScript Templates), Semantic HTML5, Vanilla JavaScript, Optimized Custom CSS
-* **Backend**: Node.js, Express.js (RESTful API architecture & custom middleware plumbing)
-* **Database**: PostgreSQL (Relational schema modeling with robust indexing)
+* **Frontend**: EJS, Semantic HTML5, JavaScript, CSS
+* **Backend**: Node.js, Express.js (RESTful API architecture & custom middleware)
+* **Database**: PostgreSQL
 * **DevOps & Deployment**: Docker , Render Container Network, Neon Serverless Postgres 
 
 ---
