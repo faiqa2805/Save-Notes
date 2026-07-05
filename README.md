@@ -67,7 +67,7 @@ CREATE TABLE books (
 
 5. Start the development server:
 ```bash
-npm start
+node app.js
 
 ```
 ## 🚀 Roadmap & Future Enhancements
