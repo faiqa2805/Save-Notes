@@ -563,3 +563,11 @@ body::before {
 .btn-submit:active {
   transform: translateY(0);
 }
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px; /* Adds a little breathing room at the bottom */
+}
