@@ -1,10 +1,3 @@
-# SaveNotes
-
-Inspired by my sister's need for a structured, section-based repository for her books and academic documents, I built SaveNotes as a personal challenge in end-to-end systems engineering. Instead of relying on existing mass-market tools, I used this MVP capstone project to practice rigorous architectural planning and low-overhead design. It turned into an incredible deep dive into the joy of systems-level thinking—resulting in a fully containerized, high-performance web application engineered for optimal database integrity and dynamic data delivery.
-
----
-
-
 ## 🏗️ System Architecture & Design
 
 * **Strict Database Integrity:** Enforced atomic consistency natively in PostgreSQL using strict schemas and foreign key constraints (`section_id INT REFERENCES sections(id)`), entirely preventing invalid or partial application-layer writes.
