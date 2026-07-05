@@ -91,29 +91,14 @@ CREATE TABLE books (
 npm start
 
 ```
+## 🚀 Roadmap & Future Enhancements
 
+To further scale the application and adhere to enterprise-grade production standards, the following architectural upgrades are planned:
 
-
----
-
-## 🐳 Docker Production Build
-
-This application is fully containerized to ensure cross-environment consistency and horizontal scaling capability.
-
-### Build the Image:
-
-```bash
-docker build -t savenotes:latest .
-
-```
-
-### Run the Container locally:
-
-```bash
-docker run -p 3000:3000 --env-file .env savenotes:latest
-
-```
-
+*   **Multi-Tenant Security:** Implement JWT-based authentication and PostgreSQL Row-Level Security (RLS) to safely isolate data across multiple users.
+*   **Cloud Object Storage:** Decouple asset storage from the compute layer by integrating AWS S3 for robust, scalable PDF file management.
+*   **In-Memory Caching:** Introduce a Redis caching layer to intercept high-frequency database queries, minimizing latency and reducing the read-load on the primary database.
+*   **Automated CI/CD Pipelines:** Integrate GitHub Actions to enforce strict unit and integration testing workflows (Jest/Supertest) prior to any automated production deployment.
 ---
 
 ## 🎨 Acknowledgments & Asset Attributions
