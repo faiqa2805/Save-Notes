@@ -40,7 +40,7 @@ npm install
 ```
 
 
-3. Configure your local environment variables by creating a `.env` file in the root directory:
+3. Update your local environment variables in `.env` file in the root directory:
 ```env
 DATABASE_URL=postgres://your_user:your_password@localhost:5432/your_db
 PORT=3000
